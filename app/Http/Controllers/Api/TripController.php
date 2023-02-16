@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTripRequest;
 use App\Http\Resources\TripResource;
 use App\Models\Trip;
 use App\Repositories\TripRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -19,9 +20,6 @@ class TripController extends Controller
 
     /**
      * Display trips listing.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(Request $request): AnonymousResourceCollection
     {
@@ -33,10 +31,9 @@ class TripController extends Controller
     /**
      * Store a newly created trip in storage.
      *
-     * @param  \App\Http\Requests\StoreTripRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTripRequest $request)
+    public function store(StoreTripRequest $request): JsonResponse
     {
         $this->authorize('create', [Trip::class, $request->car_id]);
 

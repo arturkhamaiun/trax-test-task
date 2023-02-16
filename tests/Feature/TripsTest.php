@@ -31,7 +31,6 @@ class TripsTest extends TestCase
             ->for($user)
             ->createOne();
 
-
         $response = $this->get(route('trips.index'));
 
         $response->assertStatus(200);
@@ -39,7 +38,7 @@ class TripsTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 [
-                    'id' ,
+                    'id',
                     'date',
                     'miles',
                     'total',
@@ -48,8 +47,8 @@ class TripsTest extends TestCase
                         'make',
                         'model',
                         'year',
-                    ]
-                ]
+                    ],
+                ],
             ],
         ]);
     }
@@ -73,7 +72,7 @@ class TripsTest extends TestCase
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
-                'id' ,
+                'id',
                 'date',
                 'miles',
                 'total',
@@ -82,7 +81,7 @@ class TripsTest extends TestCase
                     'make',
                     'model',
                     'year',
-                ]
+                ],
             ],
         ]);
         $this->assertDatabaseHas(Trip::class, $params);

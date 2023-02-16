@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCarRequest;
 use App\Http\Resources\CarResource;
 use App\Models\Car;
 use App\Repositories\CarRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -19,9 +20,6 @@ class CarController extends Controller
 
     /**
      * Display cars listing.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(Request $request): AnonymousResourceCollection
     {
@@ -32,11 +30,8 @@ class CarController extends Controller
 
     /**
      * Store a newly created car in storage.
-     *
-     * @param \App\Http\Requests\StoreCarRequest $request
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreCarRequest $request)
+    public function store(StoreCarRequest $request): JsonResponse
     {
         $this->authorize('create', Car::class);
 
@@ -49,10 +44,11 @@ class CarController extends Controller
     /**
      * Display car.
      *
-     * @param  Car  $car
+     * @param Car $car
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(int $id): CarResource
     {
         $car = $this->carRepository->find($id);
 
@@ -64,7 +60,8 @@ class CarController extends Controller
     /**
      * Remove car from storage.
      *
-     * @param  Car  $car
+     * @param Car $car
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(int $id)

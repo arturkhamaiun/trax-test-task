@@ -4,12 +4,10 @@ namespace App\Repositories;
 
 use App\Models\Car;
 use App\Models\Trip;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use stdClass;
 
 class TripRepository implements TripRepositoryInterface
 {
@@ -32,7 +30,7 @@ class TripRepository implements TripRepositoryInterface
             ->orderByDesc('trips.created_at')
             ->where('cars.user_id', $userId)
             ->get()
-            ->map(fn (stdClass $item) => Arr::undot((array)$item))
+            ->map(fn (\stdClass $item) => Arr::undot((array) $item))
             ->toArray();
 
         $trips = Trip::query()
