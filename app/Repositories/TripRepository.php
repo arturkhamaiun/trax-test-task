@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Car;
 use App\Models\Trip;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
@@ -46,12 +47,16 @@ class TripRepository implements TripRepositoryInterface
         $tripData['date'] = Carbon::parse($tripData['date']);
 
         return DB::transaction(function () use ($tripData) {
-            $previousTrip = Trip::query()->latest()->lockForUpdate()->first();
+            $car = $this->carRepository->find($tripData['car_id']);
+            $previousTrip = Trip::query()
+                ->belongsToUser($car->user_id)
+                ->latest()
+                ->lockForUpdate()
+                ->first();
             $tripData['total_miles'] = $tripData['miles'] + ($previousTrip?->total_miles ?? 0);
 
             $trip = Trip::create($tripData);
-
-            $this->carRepository->recalculateTotalMiles($trip->car_id);
+            $this->carRepository->recalculateTotalMiles($car->id);
 
             return $trip;
         });
