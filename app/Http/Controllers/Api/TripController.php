@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Resources\TripResource;
 use App\Models\Trip;
@@ -12,7 +13,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class TripController extends Controller
 {
     public function __construct(
-        public TripRepositoryInterface $tripRepository,
+        protected TripRepositoryInterface $tripRepository,
     ) {
     }
 

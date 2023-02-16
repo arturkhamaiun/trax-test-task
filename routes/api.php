@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\CarController;
-use App\Http\Controllers\TripController;
+use App\Http\Controllers\Api\CarController;
+use App\Http\Controllers\Api\TripController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

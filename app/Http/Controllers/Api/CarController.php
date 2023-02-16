@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Resources\CarResource;
 use App\Models\Car;
@@ -12,7 +13,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class CarController extends Controller
 {
     public function __construct(
-        public CarRepositoryInterface $carRepository,
+        protected CarRepositoryInterface $carRepository,
     ) {
     }
 

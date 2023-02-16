@@ -13,7 +13,7 @@ use stdClass;
 class TripRepository implements TripRepositoryInterface
 {
     public function __construct(
-        public CarRepositoryInterface $carRepository,
+        protected CarRepositoryInterface $carRepository,
     ) {
     }
 
