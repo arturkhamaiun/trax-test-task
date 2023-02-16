@@ -26,7 +26,7 @@ class StoreTripRequest extends FormRequest
         return [
             'date' => 'required|date',
             'car_id' => 'required|integer|exists:cars,id',
-            'miles' => 'required|numeric|min:0',
+            'miles' => 'required|numeric|min:0|max:1000000',
         ];
     }
 }

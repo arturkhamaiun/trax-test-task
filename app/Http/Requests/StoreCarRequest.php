@@ -24,9 +24,9 @@ class StoreCarRequest extends FormRequest
     public function rules()
     {
         return [
-            'year' => 'required|integer',
-            'make' => 'required|string',
-            'model' => 'required|string',
+            'year' => 'required|integer|digits:4',
+            'make' => 'required|string|min:1|max:255',
+            'model' => 'required|string|min:1|max:255',
         ];
     }
 }
