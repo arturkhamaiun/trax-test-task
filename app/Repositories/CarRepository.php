@@ -32,7 +32,7 @@ class CarRepository implements CarRepositoryInterface
     {
         $car = $this->find($id);
 
-        $car->total_miles = $car->trips->reduce(function (int $carry, Trip $trip) {
+        $car->total_miles = $car->trips->reduce(function (float $carry, Trip $trip) {
             return $carry + $trip->miles;
         }, 0);
 
