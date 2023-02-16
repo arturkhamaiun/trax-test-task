@@ -5,13 +5,12 @@ namespace App\Repositories;
 use App\Models\Car;
 use App\Models\Trip;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 
 class CarRepository implements CarRepositoryInterface
 {
-    public function all(): Collection
+    public function all(int $userId): Collection
     {
-        return Car::query()->orderByDesc('created_at')->get();
+        return Car::query()->where('user_id', $userId)->orderByDesc('created_at')->get();
     }
 
     public function find(int $id): Car

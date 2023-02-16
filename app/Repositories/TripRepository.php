@@ -17,7 +17,7 @@ class TripRepository implements TripRepositoryInterface
     ) {
     }
 
-    public function all(): Collection
+    public function all(int $userId): Collection
     {
         $result = DB::table('trips')
             ->select(
@@ -29,6 +29,7 @@ class TripRepository implements TripRepositoryInterface
             )
             ->join('cars', 'cars.id', '=', 'trips.car_id')
             ->orderByDesc('trips.created_at')
+            ->where('cars.user_id', $userId)
             ->get()
             ->map(fn (stdClass $item) => Arr::undot((array)$item))
             ->toArray();
@@ -45,9 +46,7 @@ class TripRepository implements TripRepositoryInterface
         $tripData['date'] = Carbon::parse($tripData['date']);
 
         return DB::transaction(function () use ($tripData) {
-            // Do I need lock??
-
-            $previousTrip = Trip::query()->latest()->first();
+            $previousTrip = Trip::query()->latest()->lockForUpdate()->first();
             $tripData['total_miles'] = $tripData['miles'] + ($previousTrip?->total_miles ?? 0);
 
             $trip = Trip::create($tripData);

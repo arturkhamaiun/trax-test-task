@@ -14,13 +14,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Car::factory()
-            ->count(5)
-            ->for(User::factory()->create([
-                'name' => 'Test Test',
-                'email' => 'test@test.com',
-            ]))
-            ->has(Trip::factory()->count(5))
-            ->create();
+        $firstUser = User::factory()->create([
+            'name' => 'First User',
+            'email' => 'first@example.com',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Second User',
+            'email' => 'second@example.com',
+        ]);
+
+        $cars = [
+            ['Land Rover', 'Range Rover Sport'],
+            ['Aston Martin', 'Vanquish'],
+            ['Ford', 'F150'],
+            ['Chevy', 'Tahoe'],
+            ['Tesla', 'Model X'],
+        ];
+
+        foreach ($cars as $car) {
+            [$make, $model] = $car;
+
+            Car::factory()->for($firstUser)->create([
+                'make' => $make,
+                'model' => $model
+            ]);
+        }
     }
 }

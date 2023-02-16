@@ -6,6 +6,8 @@ use App\Http\Requests\StoreCarRequest;
 use App\Http\Resources\CarResource;
 use App\Models\Car;
 use App\Repositories\CarRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CarController extends Controller
 {
@@ -17,13 +19,14 @@ class CarController extends Controller
     /**
      * Display cars listing.
      *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request): AnonymousResourceCollection
     {
         $this->authorize('viewAny', Car::class);
 
-        return CarResource::collection($this->carRepository->all());
+        return CarResource::collection($this->carRepository->all($request->user()->id));
     }
 
     /**

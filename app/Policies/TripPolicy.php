@@ -29,6 +29,6 @@ class TripPolicy
      */
     public function create(User $user, int $carId)
     {
-        return $user->id === Car::findOrFail($carId)->user_id;
+        return $user->id === Car::find($carId)?->user_id;
     }
 }

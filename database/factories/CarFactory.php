@@ -17,21 +17,11 @@ class CarFactory extends Factory
      */
     public function definition()
     {
-        $cars = [
-            ['Land Rover', 'Range Rover Sport'],
-            ['Aston Martin', 'Vanquish'],
-            ['Ford', 'F150'],
-            ['Chevy', 'Tahoe'],
-            ['Tesla', 'Model X'],
-        ];
-
-        [$make, $model] = $cars[array_rand($cars)];
-
         return [
             'year' => $this->faker->year,
-            'make' => $make,
-            'model' => $model,
-            'total_miles' => $this->faker->randomFloat(1, 1, 100),
+            'make' => $this->faker->word,
+            'model' => $this->faker->word,
+            'total_miles' => 0,
             'user_id' => function (array $attributes) {
                 return (int)$attributes['user_id'] ?? User::factory()->create()->id;
             },

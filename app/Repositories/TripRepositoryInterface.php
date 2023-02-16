@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface TripRepositoryInterface
 {
-    public function all(): Collection;
+    public function all(int $userId): Collection;
     public function create(array $tripData): Trip;
 }

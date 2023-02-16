@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Resources\TripResource;
-use App\Models\Car;
 use App\Models\Trip;
 use App\Repositories\TripRepositoryInterface;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-use stdClass;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TripController extends Controller
 {
@@ -21,13 +19,14 @@ class TripController extends Controller
     /**
      * Display trips listing.
      *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request): AnonymousResourceCollection
     {
         $this->authorize('viewAny', Trip::class);
 
-        return TripResource::collection($this->tripRepository->all());
+        return TripResource::collection($this->tripRepository->all($request->user()->id));
     }
 
     /**
