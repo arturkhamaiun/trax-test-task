@@ -19,7 +19,6 @@ class TripRepository implements TripRepositoryInterface
 
     public function all(): Collection
     {
-        // TODO cache
         $result = DB::table('trips')
             ->select(
                 'trips.*',
